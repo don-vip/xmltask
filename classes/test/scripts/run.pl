@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# $Id: run.pl,v 1.48 2009/08/13 16:31:07 bagnew Exp $
+# $Id: run.pl,v 1.49 2009/09/14 17:18:50 bagnew Exp $
 
 #
 # tests for xmltask. This swaps tests in/out depending on the
@@ -12,7 +12,7 @@ my $CP=$ENV{'CLASSPATH'};
 my $cont=0;
 my @failures=();
 
-my @tests = (1..129);
+my @tests = (1..130);
 if (@ARGV > 0) {
   while ($ARGV[0]=~/^-/) {
     if ($ARGV[0] eq "-c") {

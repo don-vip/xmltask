@@ -23,11 +23,11 @@ public class CallAction extends Action implements XPathAnalyserClient {
   private final boolean inheritAll;
   private final boolean inheritRefs;
   private final String buffer;
-  private final List params;
+  private final List<Param> params;
 
   private Ant callee;
 
-  public CallAction(final String target, final XmlTask task, final boolean inheritAll, final boolean inheritRefs, final String buffer, final List params) {
+  public CallAction(final String target, final XmlTask task, final boolean inheritAll, final boolean inheritRefs, final String buffer, final List<Param> params) {
     this.target = target;
     this.task = task;
     this.inheritAll = inheritAll;
@@ -53,8 +53,8 @@ public class CallAction extends Action implements XPathAnalyserClient {
    * since properties will remain the same between invocations
    */
   private void resetParams() {
-    for (Iterator i = params.iterator(); i.hasNext(); ) {
-      Param param = (Param)i.next();
+    for (Iterator<Param> i = params.iterator(); i.hasNext(); ) {
+      Param param = i.next();
       if (param.getPath() != null) {
         param.setValue(null);
       }
@@ -92,8 +92,8 @@ public class CallAction extends Action implements XPathAnalyserClient {
     }
 
     if (params != null) {
-      for (Iterator i = params.iterator(); i.hasNext(); ) {
-        Param param = (Param)i.next();
+      for (Iterator<Param> i = params.iterator(); i.hasNext(); ) {
+        Param param = i.next();
 
         if (param.getPath() != null) {
           XPathAnalyser xpa = XPathAnalyserFactory.getAnalyser();

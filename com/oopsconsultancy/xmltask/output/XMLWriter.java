@@ -247,9 +247,9 @@ public class XMLWriter extends XMLFilterImpl
   {
     setOutput(writer);
     nsSupport = new NamespaceSupport();
-    prefixTable = new Hashtable();
-    forcedDeclTable = new Hashtable();
-    doneDeclTable = new Hashtable();
+    prefixTable = new Hashtable<>();
+    forcedDeclTable = new Hashtable<>();
+    doneDeclTable = new Hashtable<>();
   }
 
 
@@ -915,7 +915,7 @@ public class XMLWriter extends XMLFilterImpl
      */
     private void forceNSDecls ()
     {
-      Enumeration prefixes = forcedDeclTable.keys();
+      Enumeration<String> prefixes = forcedDeclTable.keys();
       while (prefixes.hasMoreElements()) {
         String prefix = (String)prefixes.nextElement();
         doPrefix(prefix, null, true);
@@ -1108,7 +1108,7 @@ public class XMLWriter extends XMLFilterImpl
    */
   private void writeNSDecls () throws SAXException
   {
-    Enumeration prefixes = nsSupport.getDeclaredPrefixes();
+    Enumeration<?> prefixes = nsSupport.getDeclaredPrefixes();
     while (prefixes.hasMoreElements()) {
       String prefix = (String) prefixes.nextElement();
       String uri = nsSupport.getURI(prefix);
@@ -1168,9 +1168,9 @@ public class XMLWriter extends XMLFilterImpl
     // Internal state.
     ////////////////////////////////////////////////////////////////////
 
-    private Hashtable prefixTable;
-  private Hashtable forcedDeclTable;
-  private Hashtable doneDeclTable;
+    private Hashtable<String, String> prefixTable;
+  private Hashtable<String, Boolean> forcedDeclTable;
+  private Hashtable<String, String> doneDeclTable;
   private int elementLevel = 0;
   private Writer output;
   private NamespaceSupport nsSupport;

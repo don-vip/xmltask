@@ -1,7 +1,6 @@
 package com.oopsconsultancy.xmltask.jdk15;
 
 import org.w3c.dom.*;
-import org.w3c.dom.traversal.*;
 import com.oopsconsultancy.xmltask.*;
 import javax.xml.xpath.*;
 

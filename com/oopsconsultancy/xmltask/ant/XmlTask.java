@@ -53,7 +53,7 @@ public class XmlTask extends Task {
   private boolean failWithoutMatch = false;
   private String[] buffers = new String[]{};
 
-  private final List filesets = new ArrayList();
+  private final List<FileSet> filesets = new ArrayList<>();
 
   /**
    * the file/buffer to output to
@@ -63,7 +63,7 @@ public class XmlTask extends Task {
   /**
    * the XML document to work on (from the source file)
    */
-  private List docs = new ArrayList();
+  private List<InputSpec> docs = new ArrayList<>();
 
   public XmlTask() {
     super();
@@ -81,7 +81,7 @@ public class XmlTask extends Task {
   /**
    * the list of replacements to build
    */
-  private List replacements = new ArrayList();
+  private List<XmlReplace> replacements = new ArrayList<>();
 
   public void setFactory(final String p) {
      log("XPath Factory = " + p, Project.MSG_VERBOSE);
@@ -164,7 +164,7 @@ public class XmlTask extends Task {
     }
     else {
       File sf = new File(source);
-      docs = new ArrayList();
+      docs = new ArrayList<>();
       String file = source;
       if (!sf.isAbsolute()) {
         file = getPathPrefix() + source;
@@ -265,7 +265,7 @@ public class XmlTask extends Task {
    */
   public static class LocalEntityResolver implements EntityResolver {
 
-    private Map entities = new HashMap();
+    private Map<String, String> entities = new HashMap<>();
 
     public InputSource resolveEntity(String publicId, String systemId) {
       String local = null;
@@ -541,7 +541,7 @@ public class XmlTask extends Task {
    */
   public void setClearBuffers(final String bufferset) {
     StringTokenizer st = new StringTokenizer(bufferset, ",");
-    List res = new ArrayList();
+    List<String> res = new ArrayList<>();
     while (st.hasMoreTokens()) {
       res.add(st.nextToken());
     }
@@ -588,7 +588,7 @@ public class XmlTask extends Task {
         if (docs.size() > 0) {
           throw new BuildException("Can't use filesets together with source inputs");
         }
-        Iterator iter = filesets.iterator();
+        Iterator<FileSet> iter = filesets.iterator();
         int count = 0;
         FileSet fs = null;
         while (iter.hasNext())

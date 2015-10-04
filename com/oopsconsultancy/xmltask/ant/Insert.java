@@ -115,7 +115,7 @@ public class Insert implements Instruction {
       else if (text != null) {
         if (expandProperties) {
           // we expand properties by default...
-          text = ProjectHelper.replaceProperties(task.getProject(), text, task.getProject().getProperties());
+          text = PropertyHelper.getPropertyHelper(task.getProject()).replaceProperties(null, text, task.getProject().getProperties());
         }
         action = InsertAction.fromString(text, task);
       }

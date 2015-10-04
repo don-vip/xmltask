@@ -22,7 +22,7 @@ public class XmlReplace implements XPathAnalyserClient {
 
   private Task task = null;
 
-  private final List nodes = new ArrayList();
+  private final List<Node> nodes = new ArrayList<>();
 
   private String ifProperty;
 
@@ -74,7 +74,7 @@ public class XmlReplace implements XPathAnalyserClient {
     // and iterate through the nodes returned via the callbacks.
     // We do this otherwise we could get in nasty loop situations
     // with repeated matches, inserts and matches on *those* inserts
-    for (Iterator i = nodes.iterator(); i.hasNext();) {
+    for (Iterator<Node> i = nodes.iterator(); i.hasNext();) {
       action.apply((Node) i.next());
     }
 

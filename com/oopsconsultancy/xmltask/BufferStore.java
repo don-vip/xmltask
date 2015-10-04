@@ -43,16 +43,17 @@ public class BufferStore {
    *          the task for which the buffers are needed
    * @return the buffers
    */
-  private static Map getBuffers(final Task task) {
+  private static Map<String, List<Node>> getBuffers(final Task task) {
     if (task == null) {
       throw new IllegalArgumentException("Can't get buffers for a null task");
     }
     if (task.getProject() == null) {
       throw new IllegalArgumentException("Can't get buffers for a task with no associated project");
     }
-    Map buffers = (Map) task.getProject().getReference(BUFFERS_PROJECT_REF);
+    @SuppressWarnings("unchecked")
+	Map<String, List<Node>> buffers = (Map<String, List<Node>>) task.getProject().getReference(BUFFERS_PROJECT_REF);
     if (buffers == null) {
-      buffers = new HashMap();
+      buffers = new HashMap<>();
       task.getProject().addReference(BUFFERS_PROJECT_REF, buffers);
     }
     return buffers;
@@ -67,7 +68,7 @@ public class BufferStore {
    * @return the array of nodes (elements/text/attributes whatever)
    */
   public static Node[] get(final String name, final Task task) {
-    List res = getBuffer(name, task);
+    List<Node> res = getBuffer(name, task);
     if (res == null) {
       return null;
     }
@@ -106,7 +107,7 @@ public class BufferStore {
    * @param task
    * @return the contents of the given buffer
    */
-  private static List getBuffer(final String name, final Task task) {
+  private static List<Node> getBuffer(final String name, final Task task) {
 
     if (isFileBuffer(name)) {
       File file = new File(getFilenameFromBuffer(name));
@@ -117,7 +118,8 @@ public class BufferStore {
       try {
         in = new ObjectInputStream(new FileInputStream(file));
         // Deserialize the object
-        List buffer = (List) in.readObject();
+        @SuppressWarnings("unchecked")
+		List<Node> buffer = (List<Node>) in.readObject();
         in.close();
         return buffer;
       }
@@ -127,8 +129,8 @@ public class BufferStore {
       }
     }
 
-    Map buffers = getBuffers(task);
-    return (List) buffers.get(name);
+    Map<String, List<Node>> buffers = getBuffers(task);
+    return (List<Node>) buffers.get(name);
   }
 
 
@@ -139,7 +141,7 @@ public class BufferStore {
    * @param list
    * @param task
    */
-  private static void setBuffer(final String name, final List list, final Task task) {
+  private static void setBuffer(final String name, final List<Node> list, final Task task) {
     if (isFileBuffer(name)) {
       File f = new File(getFilenameFromBuffer(name));
       try {
@@ -154,7 +156,7 @@ public class BufferStore {
         throw new IllegalStateException("Problem during serialization of " + f + " : " + e.getMessage());
       }
     }
-    Map buffers = getBuffers(task);
+    Map<String, List<Node>> buffers = getBuffers(task);
     buffers.put(name, list);
   }
 
@@ -177,11 +179,11 @@ public class BufferStore {
     // create a deep copy of this...
     Node newnode = xml.cloneNode(true);
     log("Storing " + newnode + " against buffer (" + name + ")", task);
-    List list = getBuffer(name, task);
+    List<Node> list = getBuffer(name, task);
     if (list != null) {
       if (!append) {
         log(" (overwriting existing entry)", task);
-        list = new ArrayList();
+        list = new ArrayList<>();
         setBuffer(name, list, task);
       }
       else {
@@ -189,7 +191,7 @@ public class BufferStore {
       }
     }
     else {
-      list = new ArrayList();
+      list = new ArrayList<>();
       setBuffer(name, list, task);
     }
     log("", task);
@@ -216,7 +218,7 @@ public class BufferStore {
    */
   public static void clear(final String name, final Task task) {
     log("Clearing buffer (" + name + ")", task);
-    setBuffer(name, new ArrayList(), task);
+    setBuffer(name, new ArrayList<Node>(), task);
   }
 
   /**

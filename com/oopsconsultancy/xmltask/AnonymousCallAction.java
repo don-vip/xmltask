@@ -17,11 +17,11 @@ public class AnonymousCallAction extends Action implements XPathAnalyserClient {
 
   private final XmlTask task;
   private final String buffer;
-  private final List params;
+  private final List<Param> params;
 
   private MacroDef macro;
 
-  public AnonymousCallAction(final MacroDef macro, final XmlTask task, final String buffer, final List params) {
+  public AnonymousCallAction(final MacroDef macro, final XmlTask task, final String buffer, final List<Param> params) {
 	this.macro = macro;
     this.task = task;
     this.buffer = buffer;
@@ -34,8 +34,8 @@ public class AnonymousCallAction extends Action implements XPathAnalyserClient {
    * init this task.
    */
   private void init() {
-    for (Iterator it = params.iterator(); it.hasNext(); ) {
-    	Param param = (Param) it.next();
+    for (Iterator<Param> it = params.iterator(); it.hasNext(); ) {
+    	Param param = it.next();
     	MacroDef.Attribute attribute = new MacroDef.Attribute();
     	attribute.setName(param.getName());
     	macro.addConfiguredAttribute(attribute);
@@ -47,8 +47,8 @@ public class AnonymousCallAction extends Action implements XPathAnalyserClient {
    * since properties will remain the same between invocations
    */
   private void resetParams() {
-    for (Iterator i = params.iterator(); i.hasNext(); ) {
-      Param param = (Param)i.next();
+    for (Iterator<Param> i = params.iterator(); i.hasNext(); ) {
+      Param param = i.next();
       if (param.getPath() != null) {
         param.setValue(null);
       }
@@ -90,8 +90,8 @@ public class AnonymousCallAction extends Action implements XPathAnalyserClient {
     instance.setMacroDef(macro);
     
     if (params != null) {
-      for (Iterator i = params.iterator(); i.hasNext(); ) {
-        Param param = (Param)i.next();
+      for (Iterator<Param> i = params.iterator(); i.hasNext(); ) {
+        Param param = i.next();
 
         if (param.getPath() != null) {
           XPathAnalyser xpa = XPathAnalyserFactory.getAnalyser();

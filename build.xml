@@ -20,7 +20,7 @@
   <target name="javac" depends="init" description="Java source build">
     <mkdir dir="classes"/>
     <!-- then compile -->
-    <javac srcdir="." destdir="classes" debug="on" nowarn="true" source="1.5" target="1.5">
+    <javac srcdir="." destdir="classes" debug="on" nowarn="true" source="1.7" target="1.7" includeantruntime="false">
       <include name="**/*.java"/>
     </javac>
     <copy file="xmltask.properties" todir="classes"/>
@@ -47,10 +47,11 @@
       <test name="com.oopsconsultancy.xmltask.test.TestXmlReplacement"/>
       <classpath>
         <pathelement location="${basedir}/classes"/>
+        <pathelement location="lib/junit-4.12.jar"/>
+        <pathelement location="lib/hamcrest-core-1.3.jar"/>
       </classpath>
       <formatter type="plain"/>
     </junit>
-    <echo>Tests succeed!</echo>
   </target>
 
   <target name="main" depends="javac,test" description="Complete build/test"/>
@@ -68,8 +69,7 @@
     <echo>Created .jar and .tar.gz</echo>
   </target>
 
-  <target name="deliver" depends="package" description="Delivers to the Sourceforge site">
-    <!-- perform my local deployment for writing to Sourceforge -->
+  <target name="deliver" depends="package" description="Delivers">
     <!-- create a web page with the correct version -->
     <checksum file="${tarfile}.gz" property="GZ_MD5"/>
     <checksum file="${jarfile}" property="JAR_MD5"/>
@@ -84,32 +84,12 @@
     <replace file="/tmp/xmltask.html" token="@JAR_MD5@" value="${JAR_MD5}"/>
     <replace file="/tmp/xmltask.html" token="@JAR_14_MD5@" value="${JAR_14_MD5}"/>
 
-    <!-- get and confirm the xmltask version -->
-    <input message="Distribute [${com.oopsconsultancy.xmltask.version}] to Sourceforge " validargs="y,n" addproperty="distribute"/>
-    <condition property="do.abort">
-      <equals arg1="n" arg2="${distribute}"/>
-    </condition>
-    <fail if="do.abort"/>
-
     <echo>Created version stamped documentation page /tmp/xmltask.html</echo>
 
-    <!-- generate versioned files for Sourceforge dispatch -->
+    <!-- generate versioned files for dispatch -->
     <copy file="${jarfile}"       tofile="${v_jarfile}"/>
     <copy file="${tarfile}.gz"    tofile="${v_tarfile}.gz"/>
     <echo>Created ${v_jarfile}, ${v_tarfile}.gz</echo>
 
-    <!-- sends the files to Sourceforge.net -->
-    <echo>FTPing to upload.sourceforge.net</echo>
-    <ftp server="upload.sourceforge.net"
-     password="xmltask@oopsconsultancy.com"
-     userid="anonymous"
-     verbose="yes"
-     remotedir="/incoming"
-     depends="yes">
-      <fileset dir=".">
-        <include name="${v_jarfile}"/>
-        <include name="${v_tarfile}.gz"/>
-      </fileset>
-    </ftp>
   </target>
 </project>

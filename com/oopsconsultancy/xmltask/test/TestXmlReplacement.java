@@ -26,7 +26,7 @@ public class TestXmlReplacement extends TestCase {
 
   public TestXmlReplacement(String name, String filename, XmlReplace replace, String result) {
     super(name);
-    this.filename = filename;
+    TestXmlReplacement.filename = filename;
     this.replace = replace;
     this.result = result;
   }

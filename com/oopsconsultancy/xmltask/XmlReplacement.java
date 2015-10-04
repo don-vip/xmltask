@@ -21,7 +21,7 @@ import org.w3c.dom.Document;
  */
 public class XmlReplacement {
 
-  private final List replacements = new ArrayList();
+  private final List<XmlReplace> replacements = new ArrayList<>();
   private final Task task;
   private final Document doc;
   private boolean report = false;
@@ -53,7 +53,7 @@ public class XmlReplacement {
    * @return the resultant document
    */
   public Document apply() {
-    Iterator ireplacements = replacements.iterator();
+    Iterator<XmlReplace> ireplacements = replacements.iterator();
     boolean success = true;
     while (ireplacements.hasNext() && success) {
       XmlReplace xr = (XmlReplace)ireplacements.next();

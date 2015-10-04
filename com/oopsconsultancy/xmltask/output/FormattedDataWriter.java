@@ -114,7 +114,7 @@ public class FormattedDataWriter extends XMLWriter implements LexicalHandler, Ou
   {
     depth = 0;
     state = SEEN_NOTHING;
-    stateStack = new Stack();
+    stateStack = new Stack<>();
     super.reset();
   }
 
@@ -378,7 +378,7 @@ public class FormattedDataWriter extends XMLWriter implements LexicalHandler, Ou
   ////////////////////////////////////////////////////////////////////
 
   private Object state = SEEN_NOTHING;
-  private Stack stateStack = new Stack();
+  private Stack<Object> stateStack = new Stack<>();
 
   private int indentStep = 0;
   private int depth = 0;

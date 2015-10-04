@@ -92,7 +92,7 @@ public class Replace implements Instruction {
       }
       else if (text != null) {
         if (expandProperties) {
-          text = ProjectHelper.replaceProperties(task.getProject(), text, task.getProject().getProperties());
+          text = PropertyHelper.getPropertyHelper(task.getProject()).replaceProperties(null, text, task.getProject().getProperties());
         }
         action = XmlAction.xmlActionfromString(text, task);
       }

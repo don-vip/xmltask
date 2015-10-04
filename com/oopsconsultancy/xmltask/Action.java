@@ -15,7 +15,7 @@ public abstract class Action {
   /**
    * the list of nodes to remove once modifications have been applied
    */
-  private List removals = new ArrayList();
+  private List<Node> removals = new ArrayList<>();
 
   /**
    * the document to work on
@@ -63,7 +63,7 @@ public abstract class Action {
         rn.getParentNode().removeChild(rn);
       }
     }
-    removals = new ArrayList();
+    removals = new ArrayList<>();
   }
 
   /**

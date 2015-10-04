@@ -23,7 +23,7 @@ public class Call implements Instruction {
 
   private boolean inheritRefs = false;
 
-  private List params = new ArrayList();
+  private List<Param> params = new ArrayList<Param>();
 
   private MacroDef macro;
 
