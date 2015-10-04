@@ -1,9 +1,0 @@
-<!DOCTYPE root [
- <!ENTITY ent "XXXXXXXXXXXXXXXXXXXXXXXXX">
-]>
-
-<root>
- <markup>start_&ent;</markup>
-</root>
-
-

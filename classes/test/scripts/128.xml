@@ -1,4 +1,0 @@
-<a>
-  <b attr1="COPY"/>
-  <c attr2="SHOULDN'T SEE ME!!!"/>
-</a>
